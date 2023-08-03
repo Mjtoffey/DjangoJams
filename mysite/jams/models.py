@@ -1,17 +1,32 @@
 from django.db import models
 
-class Song(models.Model):
-    id = models.AutoField
+
+class Songs(models.Model):
     name = models.CharField(max_length=200)
-    artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
-    album = models.ForeignKey(Album, on_delete=models.CASCADE)
-    genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
-class Artist(models.Model):
-    id = models.AutoField
+    genre = models.ManyToManyField('Genres')
+    artist = models.ManyToManyField('Artists')
+    album = models.ForeignKey(on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+
+class Artists(models.Model):
     name = models.CharField(max_length=200)
-class Album(models.Model):
-    id = models.AutoField
+
+    def __str__(self):
+        return self.name
+
+
+class Albums(models.Model):
+    title = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.title
+
+
+class Genres(models.Model):
     name = models.CharField(max_length=200)
-class Genre(models.Model):
-    id = models.AutoField
-    name = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
